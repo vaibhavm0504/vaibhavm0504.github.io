@@ -1,0 +1,150 @@
+
+
+.formcontainer{
+	text-align: center;
+}
+
+.maincontainer{
+	background: #F9F9F9;;
+	width: 100%;
+	position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+  	margin: 0 auto;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+@media screen and (min-width: 1024px) {
+	.maincontainer {
+		width: 50%;
+	}	
+}
+
+
+.formwrapper {
+	margin: 0 auto;	
+	padding: 30px;
+  background-color: lightgray;
+}
+
+.formwrapper h2 {
+  margin-top: 10px;
+}
+
+.mobileOperator {
+	display: none;
+}
+
+.mobileOperator img {
+	height: 14px;
+}
+
+span.statename {
+	font-size: 10px;
+}
+
+.mobileOperator.active {
+	display: inline;
+}
+
+.invalid-otp {
+	font-size: 10px;
+  color: red;
+  display: none;
+  margin-top: 0;
+}
+.invalid-otp.active {
+  display: block;
+}
+.otp-form.hide {
+	display: none;
+}
+
+.success-container {
+	display: none;
+}
+
+.success-container.show {
+	display: block;
+}
+
+.formwrapper h2{
+	text-align: center;
+}
+
+.submit{
+	text-align: center;
+	padding: 10px;
+}
+
+.submit-form{
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: pointer;
+  width: auto;
+  border-radius: 4px;
+}
+
+.submit-form:disabled {
+	cursor: not-allowed;
+}
+
+.user{
+	padding: 10px;
+}
+
+.mobile{
+	padding: 10px;
+}
+
+.otp-form{
+	margin: 0 auto;
+	text-align: center;
+}
+
+.otpSubmit {
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: pointer;
+  width: auto;
+  border-radius: 4px;
+}
+
+.invalid {
+	border: 1px solid red;
+}
+
+input {
+	padding: 10px;
+	border: 1px solid darkgrey;
+}
+
+label {
+	width: 120px;
+	display: inline-block;
+	text-align: left;
+}
+
+.firstNameBox{
+  margin: 0 0 5px;
+  padding: 90px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.randomNO{
+	font-size: 14px;
+}
+
+.success-container{
+	font-size: 25px;
+	text-align: center;
+	color: lightgreen;
+}

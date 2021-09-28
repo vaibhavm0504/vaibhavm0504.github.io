@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <link rel='stylesheet' href='form-style.css' type='text/css' />
+  </head>
+  <body>
+    <h1 class="firstNameBox"></h1>
+    <div class="otp-form">
+      <input class="otpField" type="number" />
+      <h6 class="invalid-otp"></h6>
+      <h3 class="randomNo"></h3>
+      <button class="otpSubmit">Submit OTP</button>
+    </div>
+    <div class="success-container">
+      <h3>Validation Successful. Please wait while we redirect you to Pixel6 home page</h3>
+    </div>
+    <script>
+      // Getting first name and mobile number from URL params.
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const firstNameUrlParam = urlParams.get('firstName');
+      const mobileNoUrlParam = urlParams.get('mobileNo');
+
+      // Displaying OTP message.
+      const firstnameBoxEl = document.querySelector('.firstNameBox');
+      firstnameBoxEl.innerHTML = `Dear ${firstNameUrlParam}, Thank you for inquiry. A 4 digit mobile no is sent to your mobile no:${mobileNoUrlParam}, please enter it in following box and submit for confirmation`;
+    
+      // To generate 4 digit random number.
+      const otpEl = document.querySelector('.otpField');
+      var randomNumber = Math.floor(1000 + Math.random() * 9000);
+      const randomNoEl = document.querySelector('.randomNo');
+      randomNoEl.innerHTML = `Please enter the given OTP number: ${randomNumber}`;
+
+      // To check whether entered OTP matches with the OTP generated.
+      const otpEnteredButton = document.querySelector('.otpSubmit');
+      let counter = 0;
+      const invalidOtpField = document.querySelector('.invalid-otp');
+      const successContainerEl = document.querySelector('.success-container');
+      const otpFormEl = document.querySelector('.otp-form');
+      otpEnteredButton.addEventListener('click', () => {
+        const otpEntered = otpEl.value;
+        // Entered OTP is correct so redirect to Pixel6 ome page.
+        if (otpEntered == randomNumber) {
+          otpFormEl.classList.add('hide');
+          successContainerEl.classList.add('show');
+          // Setting a time out of 3 secons before user is redirected to Pixel6 site.
+          setTimeout(function(){ window.location.href = 'http://pixel6.co/' }, 3000);
+        } else {
+          // Counter to check whether user has entered wrong OTP more than 3 times.
+          counter = counter + 1;
+          invalidOtpField.innerHTML = `Invalid OTP. Please try again. Attempt: ${counter}`;
+          invalidOtpField.classList.add('active');
+          
+          // Checks if wrong OTP is entered 3 times then redirect user to Pixel site 404 not found page.
+          if (counter > 2) {
+            otpEnteredButton.disabled = true;
+            window.location.href = 'http://pixel6.co/404/';
+          } 
+        }
+      });
+    </script>
+  </body>
+</html>

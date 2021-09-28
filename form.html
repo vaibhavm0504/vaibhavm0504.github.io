@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>form</title>
+		<link rel='stylesheet' href='form-style.css' type='text/css' />      
+	</head>
+	<body>
+			<div class="maincontainer">
+				<form class="formwrapper">
+					<h2>Sign up form</h2>
+					<div class="formcontainer">
+						<div class="user">
+							<label>Username:</label>
+							<input class="username" placeholder="First Name" type="text">
+						</div>
+						<div class="email">
+							<label>Email:</label>
+							<input type="email" palceholder="test@gmail.com" class="emailId"> 
+						</div>
+						<div class="mobile">
+							<label >Mobile Number:</label>
+							<input placeholder="(987)-999-000" class="mobile-no" type="text">
+							<span class="mobileOperator voda"><img src="./images/voda.PNG" /></span>
+              <span class="mobileOperator jio"><img src="./images/jio.PNG" /></span>
+              <span class="mobileOperator reliance"><img src="./images/reliance.PNG" /></span>
+              <span class="mobileOperator invalidOperator">Invalid Operator</span>
+              <span class="stateName"></span>
+						</div>
+					</div>
+          <div class="submit">
+            <button type="submit" class="submit-form">Submit</button>
+          </div>
+				</form>
+			</div>
+		<script>
+			const submitButtonEl = document.querySelector('form');
+      // Sbmit event fired when user clicks on Submit button.
+      submitButtonEl.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // To get form input elements in constants.
+        const usernameEl = document.querySelector('.username');
+        const emailEl = document.querySelector('.emailId');
+        const mobileNoEl = document.querySelector('.mobile-no');
+        let userNameErrors = 0, emailErrors = 0, mobileNoErrors = 0;
+
+        /* Checks whether User Name is blank or not.
+            If yes, then adds invalid class to input element and sets username error to 1.
+         */
+        if (usernameEl.value == '') {
+          usernameEl.classList.add('invalid');
+          userNameErrors = 1;
+        } else {
+          if (usernameEl.classList.contains('invalid')) {
+            usernameEl.classList.remove('invalid');
+          }
+          userNameErrors = 0;
+        }
+
+        /* Checks whether Email is blank or not.
+            If yes, then adds invalid class to input element and sets username error to 1.
+            Also, checks whether entered email is in correct format.
+         */
+        const onlyEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (emailEl.value == '') {
+          emailEl.classList.add('invalid');
+          emailErrors = 1;
+        } else if (!onlyEmail.test(String(emailEl.value).toLowerCase())) {
+          emailEl.classList.add('invalid');
+          emailErrors = 1;
+        } else {
+          if (emailEl.classList.contains('invalid')) {
+            emailEl.classList.remove('invalid');
+          }
+          emailErrors = 0;
+        }
+
+        const stateNameEl = document.querySelector('.stateName');
+        const operatorNameEl = document.querySelector('.invalidOperator');
+        /* Checks whether mobile is blank or not.
+            If yes, then adds invalid class to input element and sets username error to 1.
+            Also, checks whether entered mobile number is not invalid.
+         */
+        if (mobileNoEl.value == '') {
+          mobileNoEl.classList.add('invalid');
+          mobileNoErrors = 1;
+        } else if (stateNameEl.textContent.includes('Invalid')) {
+          mobileNoEl.classList.add('invalid');
+          mobileNoErrors = 1;
+        } else if (operatorNameEl.classList.contains('active')) {
+          mobileNoEl.classList.add('invalid');
+          mobileNoErrors = 1;
+        } else {
+          if (mobileNoEl.classList.contains('invalid')) {
+            mobileNoEl.classList.remove('invalid');
+          }
+          mobileNoErrors = 0;
+        }
+
+        // Checks whether form values do not have errors and redirects user to OTP page.
+        if (userNameErrors == 0 && mobileNoErrors == 0 && emailErrors == 0) {
+          const firstName = document.querySelector('.username').value;
+          const mobileNo = document.querySelector('.mobile-no').value;
+          window.location.href = `./otp.html?firstName=${firstName}&mobileNo=${mobileNo}`;
+        } else {
+          alert('Please enter correct info and then click Submit again');
+        }
+      });
+
+      let mobileNoEl = document.querySelector('.mobile-no');
+
+			const onlyNumbers = (/^[0-9]+$/);
+      // Event listener for mobile number field to check if it has correct operator and state.
+			mobileNoEl.addEventListener('input', () => {
+				let numVal = mobileNoEl.value.replace(/\D/g, '');
+        // Object for states and UTs and their codes.
+        const stateDirectory = {
+          'Andhra Pradesh': 123,
+          'Arunachal Pradesh': 122,
+          'Assam': 124,
+          'Bihar': 125,
+          'Chhattisgarh': 126,
+          'Goa': 127,
+          'Gujarat': 128,
+          'Haryana': 129,
+          'Himachal Pradesh': 130,
+          'Jharkhand': 131,
+          'Karnataka': 132,
+          'Kerala': 133,
+          'Madhya Pradesh': 134,
+          'Maharashtra': 135,
+          'Manipur': 136,
+          'Meghalaya': 137,
+          'Mizoram': 138,
+          'Nagaland': 139,
+          'Odisha': 140,
+          'Punjab': 141,
+          'Rajasthan': 142,
+          'Sikkim': 143,
+          'Tamil Nadu': 144,
+          'Telangana': 145,
+          'Tripura': 146,
+          'Uttar Pradesh': 147,
+          'Uttarakhand': 148,
+          'West Bengal': 149,
+          'Andaman and Nicobar Islands': 250,
+          'Chandigarh': 251,
+          'Dadra & Nagar Haveli and Daman & Diu': 252,
+          'Delhi': 253,
+          'Jammu and Kashmir': 254,
+          'Lakshadweep': 255,
+          'Puducherry': 256,
+          'Ladakh': 257
+        }
+
+        const allOperators = document.querySelectorAll('.mobileOperator');
+        allOperators.forEach((operator) => {
+          if (operator.classList.contains('active')) {
+            operator.classList.remove('active');
+          }
+        });
+
+        // Matches to (999)-999-9999 format
+        var x = numVal.match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        mobileNoEl.value = !x[2] ? x[1] : '(' + x[1] + ')-' + x[2] + (x[3] ? '-' + x[3] : '');
+
+        // Checks operator for the first 3 digits of mobile no.
+        if (numVal.length > 2) {
+          let mobileOperator = numVal.slice(0, 3);
+          mobileOperator = Number.parseInt(mobileOperator);
+          if (620 < mobileOperator && mobileOperator < 800) {
+            const reliance = document.querySelector('.mobileOperator.reliance');
+            reliance.classList.add('active');
+          } else if (800 < mobileOperator && mobileOperator < 921) {
+            const jio = document.querySelector('.mobileOperator.jio');
+            jio.classList.add('active');
+          } else if (920 < mobileOperator && mobileOperator < 1000) {
+            const voda = document.querySelector('.mobileOperator.voda');
+            voda.classList.add('active');
+          } else {
+            const invalidOperator = document.querySelector('.mobileOperator.invalidOperator');
+            invalidOperator.classList.add('active');
+          }
+        }
+
+        // Checks state for the middle 3 digits digits of mobile no.
+        if (numVal.length === 6) {
+          let state = numVal.slice(3, 7);
+          state = Number.parseInt(state);
+          const stateNameEl = document.querySelector('.stateName');
+          for (const [key, value] of Object.entries(stateDirectory)) {
+            if (state == value) {
+              stateNameEl.innerHTML = key;
+              break;
+            } else {
+              stateNameEl.innerHTML = 'Invalid State';
+            }
+          }
+        }
+			});
+		</script>
+	</body>
+</html>
