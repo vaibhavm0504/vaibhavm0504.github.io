@@ -5,7 +5,7 @@
   <body>
     <h1 class="firstNameBox"></h1>
     <div class="otp-form">
-      <input class="otpField" type="number" />
+      <input class="otpField" type="text" maxlength=4 />
       <h6 class="invalid-otp"></h6>
       <h3 class="randomNo"></h3>
       <button class="otpSubmit">Submit OTP</button>
@@ -23,9 +23,13 @@
       // Displaying OTP message.
       const firstnameBoxEl = document.querySelector('.firstNameBox');
       firstnameBoxEl.innerHTML = `Dear ${firstNameUrlParam}, Thank you for inquiry. A 4 digit mobile no is sent to your mobile no:${mobileNoUrlParam}, please enter it in following box and submit for confirmation`;
-    
-      // To generate 4 digit random number.
+      
       const otpEl = document.querySelector('.otpField');
+      otpEl.addEventListener('input', () => {
+        otpEl.value = otpEl.value.replace(/\D/g, '');
+      });
+
+      // To generate 4 digit random number.
       var randomNumber = Math.floor(1000 + Math.random() * 9000);
       const randomNoEl = document.querySelector('.randomNo');
       randomNoEl.innerHTML = `Please enter the given OTP number: ${randomNumber}`;
@@ -45,16 +49,20 @@
           // Setting a time out of 3 secons before user is redirected to Pixel6 site.
           setTimeout(function(){ window.location.href = 'http://pixel6.co/' }, 3000);
         } else {
-          // Counter to check whether user has entered wrong OTP more than 3 times.
-          counter = counter + 1;
-          invalidOtpField.innerHTML = `Invalid OTP. Please try again. Attempt: ${counter}`;
-          invalidOtpField.classList.add('active');
+          if (otpEntered === ''|| otpEntered === 'null') {
+            counter = counter;
+          } else {
+            // Counter to check whether user has entered wrong OTP more than 3 times.
+            counter = counter + 1;
+            invalidOtpField.innerHTML = `Invalid OTP. Please try again. Attempt: ${counter}`;
+            invalidOtpField.classList.add('active');
           
-          // Checks if wrong OTP is entered 3 times then redirect user to Pixel site 404 not found page.
-          if (counter > 2) {
-            otpEnteredButton.disabled = true;
-            window.location.href = 'http://pixel6.co/404/';
-          } 
+            // Checks if wrong OTP is entered 3 times then redirect user to Pixel site 404 not found page.
+            if (counter > 2) {
+              otpEnteredButton.disabled = true;
+              window.location.href = 'http://pixel6.co/404/';
+            }
+          }
         }
       });
     </script>

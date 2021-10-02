@@ -21,6 +21,11 @@
 	}	
 }
 
+.fullNameError {
+	display: inline;
+    font-size: 10px;
+    color: red;
+}
 
 .formwrapper {
 	margin: 0 auto;	
